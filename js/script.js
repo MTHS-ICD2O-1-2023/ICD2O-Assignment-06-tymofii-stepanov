@@ -12,20 +12,19 @@ window.onload = function () {
 }
 
 function fetchQuote() {
-  const url = "https://zenquotes.io/api/random"
+  const url = "https://api.adviceslip.com/advice"
   fetch(url)
     .then(response => response.json())
     .then(data => {
-      if (data && Array.isArray(data) && data.length > 0) {
-        const quote = data[0].q
-        const author = data[0].a
-        document.getElementById("quote").innerHTML = `"${quote}" - ${author}`
+      if (data && data.slip && data.slip.advice) {
+        const advice = data.slip.advice
+        document.getElementById("quote").innerHTML = `"${advice}"`
       } else {
-        document.getElementById("quote").innerHTML = "No quote available, please try again."
+        document.getElementById("quote").innerHTML = "No advice available, please try again."
       }
     })
     .catch(error => {
-      console.error("Error fetching the quote: ", error)
-      document.getElementById("quote").innerHTML = "Failed to fetch quote, please try again."
+      console.error("Error fetching the advice: ", error)
+      document.getElementById("quote").innerHTML = "Failed to fetch advice, please try again."
     })
 }
